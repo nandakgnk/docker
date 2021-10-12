@@ -1,0 +1,10 @@
+#docker --version
+#docker run hello-world
+#docker images #to check images in the system
+#docker pull ubuntu #to pull ubuntu image
+#docker run -t -d ubuntu #to run container from the image
+#docker ps -a # to chek running container
+#docker exec -t <container id> bash #give exit to come out the container bash
+#docker stop <container id> #to stop running container.
+#docker commit <container id> zulaika/ubuntu #This command creates a new image in the local system. zulaika is the repository id and ubuntu is the name of the image
+#docker login # To login to the Docker cloud repo
