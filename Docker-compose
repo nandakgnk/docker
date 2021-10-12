@@ -1,0 +1,8 @@
+---
+##Docker Compose
+Docker Compose is used to run multi-container Applications.
+Each container will run a stand-alone app and it can communicate with other containers present in the same host.
+Ex: MEAN Stack Application (MANGO DB< EXPRESS JS, Angular JS & NODEJS) using diff containers. 
+
+---
+## Docker Swarm
