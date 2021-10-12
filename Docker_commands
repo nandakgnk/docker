@@ -127,7 +127,62 @@ if app == "__main__":
       ENTRYPOINT echo                    #this command will be overwrite previos CMD command as it is the first ENTRYPOINT command to execute. 
      --------------------
      
-     ADD 
+     5. ADD: The ADD command gets 2 arguments: a source and a destincation. basically it copies the files from the sourcer
+              on the host into the containers's own filesystem at the set destination. 
+              
+     -------
+       #USAGE: ADD {source dir or URL] [dest dir]
+       ADD /my_app_folder /my_app_folder
+     -----------         
+     
+     6. ENV: ENV command is used to set the ENV variables( one or more). These variable consists of "key and pairs". which can be accessed within the 
+             container by scripts and application like 
+             
+    #Usage: ENV Key value
+      ENV SERVER_WORKS 4 
+      
+      7: WORKDIR: to set where the command defined with CMD is to be executed.
+        # Usage:
+          WORKDIR /path WORKDIR ~/ 
+       
+       8: EXPOSE: It is used to associate a specified port to enable networking between the running proccess inside the container and the outside world (ie host)
+          
+          #USAGE: EXPOSE [port]
+          EXPOSE 8080
+     
+     9: MAINTAINER: to add Author name to the container 
+        MAINTAINER author_name 
+        
+     10. USER: To set UID (or username) which is to run the container based on the image being built. 
+         #USAGE: USER [UID]
+           USER 751
+           
+      11. VOLUME:  it is used to enable access from your container to a directory on the host machine (ie mounting it)
+          
+          #USAGE: VOLUME ["/dir_1","dir_2"..]
+          VOLUME ["/myfiles"]
+         
+        #######CREATE an image to install APACHE Web SErver
+        
+        FROM ubuntu 
+        MAINTAINER knanda
+        RUN apt-get update && apt-get install -y apache2 && apt-get clean && rm -r /var/lib/apt/lists/*
+        
+        ENV APACHE_RUN_USER www-data
+        ENV APACHE_RUN_GROUP www-data
+        ENV APACHE_LOG_DIR /var/log/apache2
+        
+        EXPOSE 80
+        
+        CMD ['/usr/sbin/apache2", "-D" "FOREGROUND"]       
+           
+           
+        
+       
+      
+             
+             
+        
      
      
      
