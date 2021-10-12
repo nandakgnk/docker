@@ -8,3 +8,134 @@
 #docker stop <container id> #to stop running container.
 #docker commit <container id> zulaika/ubuntu #This command creates a new image in the local system. zulaika is the repository id and ubuntu is the name of the image
 #docker login # To login to the Docker cloud repo
+#docker push zulaika/ubuntu to push the local image to Docker repo.
+#docker rm <container id> #To remove container
+#docker rmi <image id> # To remove docker image
+#docker ps -a # to see all containers
+#docker exec -it <container id> bash
+---
+Create simple application using flask and reddis 
+Flask in python web fram work and reddis is hit count database.
+
+#mkdir webapplication; cd webapplication
+#vi Dockerfile
+code:
+docker file
+-----------------------------
+From python:3.4-alpine
+Add . /code
+Workdir /code
+Run pip install -r requirments.txt
+CMD ["python", "webapp.py"]
+------------------------------
+vi webapp.py
+
+import time
+
+import redis
+from flask import Flask
+
+app = Flask(app)
+cache - redis.Redis(host='redis,port=6379)
+
+def get_hit_count():
+    retries = 5
+    while True
+        try:
+           return cache.incr('hits')
+        except redis.exceptions.ConnectionsError as exc:
+           if retries == 0:
+                raise exc
+              retries -=1
+              time.sleep(0.5)
+@app.route('/')
+def hello():
+    count = get_hit_count()
+    return 'Hello World! I hve been seen () times. \n' .format(count)
+  
+if app == "__main__":
+   app.run(host="0.0.0.0", debug=True)
+  
+:wq
+----------------------------------------
+  vi requirements.txt
+   #keep below 2 name in the file
+   flask 
+   redis
+   :wq
+   ------------------------------
+   docker-compose.yml
+   version: '3'
+   services: 
+      web:
+        build:
+        ports: 
+          -"5000:5000"
+   redis:   
+      image: "redis:alpine"
+      
+  ------------------------
+  #create all this files under one dir webapplication directory as created early
+  #docker-compose up
+  
+  ####################################
+  ###Docker File and Commands
+  #Docker file syntax consists of two kind of main line blocks: comments and commands + arguments.
+  
+  Ex Syntax
+  #Line block used for commenting   ex:   # Print "welcome to site"
+  command argument argumenta              Run echo "Welcome to the site!"
+  #######################################
+  #Docker Different set of commands
+  1. FROM : From directive is probably the most crucial amongst all others for Dockerfiles. it defines the base image to use to start the build process. 
+ ----- 
+  Ex: 
+  #usage: FROM [image name]
+  From ubuntu  # base image and on top of it will do other functionality 
+   -----
+ 
+ 2. RUN: The RUN command is the central executing directive for Dockerfiles. it takes a command as its argumetns and runs it to from the image.
+         Unlike CMD, it actually is used to build the image.
+     
+  ----
+  ex: 
+  #Usage: RUN [command]
+  FROM ubuntu
+  RUN apt-get install -y riak
+  ----
+  
+  3: CMD: This command CMD, similar to RUN, can be used for the executing a specific command. However, unlike 'RUN' it is not executed during the build,
+          but when a container instantiated using the image being built
+      
+      -------
+      ex: 
+      #Usage 1: CMD applicaiton "argument","argument",...
+      CMD "echo" "Welcome to the site"
+     ----
+     
+     4. ENTRYPOINT: ENTRYPOINT argument sets the concrete default application that is used everytime a container is created using the image. 
+      ------
+      #USAGE: ENTRYPOINT application "arg","arg",...
+      # Remember: arguments are optional. They can be provided by CMD
+           #or during the creation of container. 
+      
+      ENTRYPOINT echo 
+      #Usage example with CMD:
+      
+      #Arguments set with CMD can be overridden during *run* CMD "Hello docker!"
+      CMD "Welcome to the site"
+      ENTRYPOINT echo                    #this command will be overwrite previos CMD command as it is the first ENTRYPOINT command to execute. 
+     --------------------
+     
+     ADD 
+     
+     
+     
+  
+  
+  
+  
+  
+  
+  
+  
