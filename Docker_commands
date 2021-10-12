@@ -161,7 +161,9 @@ if app == "__main__":
           
           #USAGE: VOLUME ["/dir_1","dir_2"..]
           VOLUME ["/myfiles"]
-         
+       
+       ---------------
+       vi Dockerfile
         #######CREATE an image to install APACHE Web SErver
         
         FROM ubuntu 
@@ -175,19 +177,88 @@ if app == "__main__":
         EXPOSE 80
         
         CMD ['/usr/sbin/apache2", "-D" "FOREGROUND"]       
-           
-           
-        
+     ----------------      
+      #docker build -t myapacheimage . #Docker file must presnt int the location when using '.'
+      #docker images
+      #docker run -p 80:80 -name=App1 myapacheimage             #fir port is host port and then container port 
+      #docker ps # To see running container ps info
+      ###access webpage with Docker launch server ip and port 80    
        
-      
-             
-             
+      #########Docker File for installing Nginx 
+      vi Docker file
+       vi Dockerfile
+        #######CREATE an image to install APACHE Web SErver
         
+        FROM ubuntu 
+        MAINTAINER knanda
+        RUN apt-get update && apt-get install -y nginx
+        ADD index.html /usr/share/nginx/html/index.html  ##note: Keep index file in the same dockerfile location
+        
+        ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"
+        EXPOSE 80
+     ######################     
+     #docker build -t mynginximage . # To create image
+     #docker run -p 80:80 --name=App2 mynginximage
+        
+     Most used Docker command
      
+     docker --version       docker ps               docker commit
+     docker --help          docker images           docker import
+     docker pull            docker stop             docker export
+     docker run             docker kill             docker container
+     docker build           docker rim              dcoker compose
+     docker login           docker rmi              docker swarm
+     docker push            docker exec             docker service
      
+     #docker pull   -> To pull docker image from Docker hub 
+                        ex docker pull ubuntu
+     #docker images -> This command list down all images in your local repo.
+     #docker run    -> This command exec a Docker image on your local repo & create a running container out of it.
+                         ex: docker run ubuntu
+    #docker pull    -> this command pulls a new docker image from the Docker Hub.
+                         $docker pull ubuntu
+    # docker build   -> Command used to compile Dockerfile, for building custom Docker images based of the 
+                        $ docker build -t MyubuntuImage .              
+    
+    #docker container -> Command is used to perform various operations on the container. 
+                                                $ docker container logs <container id>
+                                                $ docker container kill <container id>
+                                                $ docker container rm <container id>
+                                                $ docker container run <container id>
+                                                $ docker container start  <container id>
+                                                
+    # docker push      ->  command to push Docker image on your local repo to Docker Hub.
+                                                $docker push nanda/mynginximage
+    # docker tag <imagename> nandakgnk/mynginximage    #name of the dcker repo and image name
      
-  
-  
+    #docker ps and docker ps -a - > Command lists all the running containers in the host. 
+                                     if '-a' flag is specified, shutdown containers are also displayed. 
+    #docker stop <container id>  -> command shutdowns the container whose container id is specified. 
+                                    shutdown is gracefull by waiting for other dependencies to shut. 
+    
+                                     
+   #docker kill <container id> -> To kill forcefully 
+   # docker exec        -> this command is used to access an already running conained and perform 
+                           operations inside the container. 
+                               ex: docker exec it <cont id> bash
+  # docker commit -> This command creates a new image of an edited container on the local repo.
+                       ex: docker commit <container id> dockerid/imageid
+   
+  # docker export -> is used to export a Docker image into a tar file in your local system.
+                      $docker export --output='latest.tar' mycontainer
+   
+   # docker import /home/kand/Downloads/demo.tgz -> command is used to import the contents of a tar file
+                                                    into your local repo
+                                                    
+                       
+   # docker service  -> it is used to control any existing docker service in docker swarn  
+     
+                                                           ex: dokcer service ls
+                                                               docker service ps
+                                                               docker service scale
+                                                               docker service stop
+                                                               docker service logs
+                                                                docker service rm
   
   
   
